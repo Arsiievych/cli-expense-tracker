@@ -62,7 +62,9 @@ var listCmd = &cobra.Command{
 			tablewriter.WithRenderer(renderer.NewColorized(colorCfg)),
 			tablewriter.WithConfig(tablewriter.Config{
 				Row: tw.CellConfig{
-					Formatting: tw.CellFormatting{AutoWrap: tw.WrapNormal},
+					Formatting: tw.CellFormatting{
+						AutoWrap: tw.WrapNormal,
+					},
 					Alignment: tw.CellAlignment{
 						Global: tw.AlignLeft,
 						PerColumn: []tw.Align{
@@ -73,7 +75,7 @@ var listCmd = &cobra.Command{
 							tw.AlignCenter,
 						},
 					},
-					ColMaxWidths: tw.CellWidth{Global: 25},
+					ColMaxWidths: tw.CellWidth{Global: 40},
 				},
 			}),
 		)
@@ -87,7 +89,7 @@ var listCmd = &cobra.Command{
 				expense.ID,
 				fmt.Sprintf("%.2f$", expense.Amount),
 				expense.Description,
-				expense.Date.Format("2006-01-02 15:04:05"),
+				expense.Date.Format("Mon, Jan 2, 2006 15:04:05"),
 			})
 			i++
 		}
