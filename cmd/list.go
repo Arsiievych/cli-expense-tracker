@@ -5,7 +5,10 @@ import (
 	"example.com/expense_tracker/internal/infra/persistence/filerepo"
 	"example.com/expense_tracker/pkg/config"
 	"fmt"
+	"github.com/fatih/color"
 	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/renderer"
+	"github.com/olekukonko/tablewriter/tw"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -39,7 +42,42 @@ var listCmd = &cobra.Command{
 			return
 		}
 
-		tableOutput := tablewriter.NewWriter(os.Stdout)
+		colorCfg := renderer.ColorizedConfig{
+			Header: renderer.Tint{
+				FG: renderer.Colors{color.FgGreen, color.Bold},
+			},
+			Column: renderer.Tint{
+				FG: renderer.Colors{color.FgCyan},
+				Columns: []renderer.Tint{
+					{FG: renderer.Colors{color.FgWhite}},
+					{},
+					{FG: renderer.Colors{color.FgHiRed}},
+				},
+			},
+			Border:    renderer.Tint{FG: renderer.Colors{color.FgWhite}},
+			Separator: renderer.Tint{FG: renderer.Colors{color.FgWhite}},
+		}
+
+		tableOutput := tablewriter.NewTable(os.Stdout,
+			tablewriter.WithRenderer(renderer.NewColorized(colorCfg)),
+			tablewriter.WithConfig(tablewriter.Config{
+				Row: tw.CellConfig{
+					Formatting: tw.CellFormatting{AutoWrap: tw.WrapNormal},
+					Alignment: tw.CellAlignment{
+						Global: tw.AlignLeft,
+						PerColumn: []tw.Align{
+							tw.AlignLeft,
+							tw.AlignCenter,
+							tw.AlignRight,
+							tw.AlignLeft,
+							tw.AlignCenter,
+						},
+					},
+					ColMaxWidths: tw.CellWidth{Global: 25},
+				},
+			}),
+		)
+
 		tableOutput.Header([]string{"№", "ID", "Amount", "Description", "Date"})
 
 		i := 1
