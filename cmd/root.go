@@ -7,13 +7,11 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "expense_tracker",
-	Short: "Hugo is a very fast static site generator",
-	Long: `A Fast and Flexible Static Site Generator built with
-                love by spf13 and friends in Go.
-                Complete documentation is available at http://hugo.spf13.com`,
+	Use:   "expense-tracker",
+	Short: "Track your expenses easily from the command line",
+	Long:  `CLI Expense Tracker is a simple and fast command-line application for recording and managing your daily expenses.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Hugo Static Site Generator")
+		fmt.Println("Expense Tracker CLI - use --help to see available commands")
 	},
 }
 

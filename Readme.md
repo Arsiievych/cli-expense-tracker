@@ -19,11 +19,12 @@ A simple command-line tool to track your expenses directly from the terminal.
 ```bash
 git clone https://github.com/Arsiievych/cli-expense-tracker.git
 cd cli-expense-tracker
+go build -o expense-tracker
 ```
 
 ## ⚙️ Usage
 ```bash
-expense-tracker [command] [flags]
+./expense-tracker [command] [flags]
 ```
 ## Available Commands
 
@@ -37,16 +38,16 @@ expense-tracker [command] [flags]
 
 ### Add a new expense
 ```bash 
-expense-tracker add --desc "Coffee" --amount 3.50
+./expense-tracker add --desc "Coffee" --amount 3.50
 ```
 
 ### Show list
 ```bash 
-expense-tracker list
+./expense-tracker list
 ```
 ![listCmdExample](./assets/listCmdExample.png)
 
 ### Remove from the list
 ```bash 
-expense-tracker remove --id exp-1749806964834981000
+./expense-tracker remove --id exp-1749806964834981000
 ```
