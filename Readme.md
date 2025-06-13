@@ -51,3 +51,6 @@ go build -o expense-tracker
 ```bash 
 ./expense-tracker remove --id exp-1749806964834981000
 ```
+
+Read more:
+https://roadmap.sh/projects/expense-tracker
