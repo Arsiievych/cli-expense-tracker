@@ -9,19 +9,15 @@ import (
 	"log"
 )
 
-var id string
-
-func init() {
-	removeCmd.Flags().StringVar(&id, "id", "id", "expense ID to remove")
-	removeCmd.MarkFlagRequired("id")
-	rootCmd.AddCommand(removeCmd)
-}
-
 var removeCmd = &cobra.Command{
 	Use:   "remove",
 	Short: "Remove expense",
 	Long:  `Remove expense from the list`,
 	Run: func(cmd *cobra.Command, args []string) {
+		id, err := cmd.Flags().GetString("id")
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		config, err := config.LoadConfig()
 		if err != nil {
@@ -36,4 +32,10 @@ var removeCmd = &cobra.Command{
 
 		fmt.Printf("Expense %s has removed!\n", id)
 	},
+}
+
+func init() {
+	removeCmd.Flags().String("id", "id", "expense ID to remove")
+	removeCmd.MarkFlagRequired("id")
+	rootCmd.AddCommand(removeCmd)
 }
