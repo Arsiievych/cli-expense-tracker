@@ -122,3 +122,26 @@ func (r *FileExpenseRepository) RemoveById(id string) error {
 
 	return r.saveExpensesInternal(expenses)
 }
+
+func (r *FileExpenseRepository) Update(expense *models.Expense) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	expenses, err := r.loadExpensesInternal()
+	if err != nil {
+		return fmt.Errorf("error getting expenses: %w", err)
+	}
+
+	if len(expenses) == 0 {
+		return fmt.Errorf("no expenses found")
+	}
+
+	for i, exp := range expenses {
+		if exp.ID == expense.ID {
+			expenses[i] = expense
+			return r.saveExpensesInternal(expenses)
+		}
+	}
+
+	return fmt.Errorf("expense with id %s not found", expense.ID)
+}

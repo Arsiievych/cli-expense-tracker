@@ -7,4 +7,5 @@ type ExpenseRepository interface {
 	GetAll() ([]*models.Expense, error)
 	GetById(id string) (*models.Expense, error)
 	RemoveById(id string) error
+	Update(expense *models.Expense) error
 }

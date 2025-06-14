@@ -68,6 +68,15 @@ func (s *ExpenseService) RemoveExpense(ID string) error {
 	return nil
 }
 
-//func (s *ExpenseService) Delete() {
-//
-//}
+func (s *ExpenseService) UpdateExpense(expense *models.Expense) error {
+	if expense == nil {
+		return fmt.Errorf("expense is not provided")
+	}
+
+	err := s.repo.Update(expense)
+	if err != nil {
+		return fmt.Errorf("error updating expense with ID %s: %w", expense.ID, err)
+	}
+
+	return nil
+}
