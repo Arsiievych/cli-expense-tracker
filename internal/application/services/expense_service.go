@@ -15,8 +15,8 @@ func NewExpenseService(repo contracts.ExpenseRepository) *ExpenseService {
 	return &ExpenseService{repo: repo}
 }
 
-func (s *ExpenseService) AddExpense(description string, amount float64) (*models.Expense, error) {
-	expense, err := models.NewExpense(description, amount, time.Now())
+func (s *ExpenseService) AddExpense(description string, amount float64, date time.Time) (*models.Expense, error) {
+	expense, err := models.NewExpense(description, amount, date)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create new expense: %w", err)
 	}
