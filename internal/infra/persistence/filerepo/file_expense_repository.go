@@ -145,3 +145,20 @@ func (r *FileExpenseRepository) Update(expense *models.Expense) error {
 
 	return fmt.Errorf("expense with id %s not found", expense.ID)
 }
+
+func (r *FileExpenseRepository) GetByDateRange(fromDate, toDate time.Time) ([]*models.Expense, error) {
+	expenses, err := r.GetAll()
+	if err != nil {
+		return nil, err
+	}
+
+	var filtered []*models.Expense
+
+	for _, exp := range expenses {
+		if exp.Date.After(fromDate) && exp.Date.Before(toDate) || exp.Date.Equal(fromDate) || exp.Date.Equal(toDate) {
+			filtered = append(filtered, exp)
+		}
+	}
+
+	return filtered, nil
+}

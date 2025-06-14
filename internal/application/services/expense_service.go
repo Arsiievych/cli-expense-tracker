@@ -11,6 +11,11 @@ type ExpenseService struct {
 	repo contracts.ExpenseRepository
 }
 
+type ExpensesSummary struct {
+	Count int
+	Sum   float64
+}
+
 func NewExpenseService(repo contracts.ExpenseRepository) *ExpenseService {
 	return &ExpenseService{repo: repo}
 }
@@ -68,4 +73,21 @@ func (s *ExpenseService) UpdateExpense(expense *models.Expense) error {
 	}
 
 	return nil
+}
+
+func (s *ExpenseService) GetExpensesByDateRange(from, to time.Time) ([]*models.Expense, error) {
+	return s.repo.GetByDateRange(from, to)
+}
+
+func (s *ExpenseService) GetExpensesSummary(expenses []*models.Expense) (ExpensesSummary, error) {
+	var summary ExpensesSummary = ExpensesSummary{
+		Count: len(expenses),
+		Sum:   0,
+	}
+
+	for _, exp := range expenses {
+		summary.Sum += exp.Amount
+	}
+
+	return summary, nil
 }
