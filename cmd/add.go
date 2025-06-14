@@ -10,14 +10,21 @@ import (
 	"os"
 )
 
-var description string
-var amount float64
-
 var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Add a new expense",
 	Long:  `Adds a new expense to your expense tracker.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		description, err := cmd.Flags().GetString("description")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		amount, err := cmd.Flags().GetFloat64("amount")
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		cfg, err := config.LoadConfig()
 		if err != nil {
 			log.Fatal(err)
@@ -37,10 +44,9 @@ var addCmd = &cobra.Command{
 }
 
 func init() {
-	addCmd.Flags().StringVarP(&description, "desc", "d", "", "Expense description")
-	addCmd.Flags().Float64VarP(&amount, "amount", "a", 0, "Expense amount (e.g., 9.99)")
+	addCmd.Flags().StringP("description", "d", "Other", "Expense description")
+	addCmd.Flags().Float64P("amount", "a", 0, "Expense amount (e.g., 9.99)")
 
-	addCmd.MarkFlagRequired("desc")
 	addCmd.MarkFlagRequired("amount")
 
 	rootCmd.AddCommand(addCmd)
