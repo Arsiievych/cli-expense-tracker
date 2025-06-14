@@ -33,22 +33,11 @@ func (s *ExpenseService) AddExpense(description string, amount float64, date tim
 }
 
 func (s *ExpenseService) GetById(ID string) (*models.Expense, error) {
-	expenses, err := s.repo.GetAll()
-	if err != nil {
-		return nil, fmt.Errorf("error getting expenses: %w", err)
+	if ID == "" {
+		return nil, fmt.Errorf("invalid expense id")
 	}
 
-	if len(expenses) == 0 {
-		return nil, fmt.Errorf("no expenses found")
-	}
-
-	for i, exp := range expenses {
-		if exp.ID == ID {
-			return expenses[i], nil
-		}
-	}
-
-	return nil, fmt.Errorf("expense with ID %s not found", ID)
+	return s.repo.GetById(ID)
 }
 
 func (s *ExpenseService) GetAll() ([]*models.Expense, error) {
