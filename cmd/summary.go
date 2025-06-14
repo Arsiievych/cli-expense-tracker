@@ -64,7 +64,6 @@ var summaryCmd = &cobra.Command{
 					log.Fatalf("invalid to date: %v", err)
 				}
 			} else {
-				// Якщо to не задано, беремо зараз
 				to = time.Now()
 			}
 		}
