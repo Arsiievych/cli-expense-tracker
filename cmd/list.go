@@ -14,10 +14,6 @@ import (
 	"os"
 )
 
-func init() {
-	rootCmd.AddCommand(listCmd)
-}
-
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Show list",
@@ -96,4 +92,8 @@ var listCmd = &cobra.Command{
 
 		tableOutput.Render()
 	},
+}
+
+func init() {
+	rootCmd.AddCommand(listCmd)
 }
