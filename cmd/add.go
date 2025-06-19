@@ -11,6 +11,13 @@ import (
 	"time"
 )
 
+const (
+	DateTimeTFormat      = "2006-01-02T15:04:05"
+	DateTimeFormat       = "2006-01-02 15:04:05"
+	DateTimeFormatShort  = "2006-01-02 15:04"
+	DateTimeTFormatShort = "2006-01-02 15:04"
+)
+
 var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Add a new expense",
@@ -69,10 +76,10 @@ func dateStrToDate(datetimeStr string) (time.Time, error) {
 	}
 
 	formats := []string{
-		"2006-01-02 15:04",
-		"2006-01-02T15:04",
-		"2006-01-02 15:04:05",
-		"2006-01-02T15:04:05",
+		DateTimeFormatShort,
+		DateTimeTFormatShort,
+		DateTimeFormat,
+		DateTimeTFormat,
 	}
 
 	for _, format := range formats {
